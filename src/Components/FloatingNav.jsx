@@ -23,13 +23,13 @@ export const FloatingNav = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const profileMenuRef = useRef(null);
   const navigate = useNavigate();
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
         setShowProfileMenu(false);
       }
     };
-
     if (showProfileMenu) {
       document.addEventListener('mousedown', handleClickOutside);
     }
@@ -37,6 +37,7 @@ export const FloatingNav = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [showProfileMenu]);
+
   const handleLogout = (e) => {
     e.preventDefault();
     sessionStorage.clear();
@@ -58,11 +59,11 @@ export const FloatingNav = () => {
           />
         )}
       </AnimatePresence>
-      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 flex h-20 gap-6 items-center px-6 py-2 rounded-full bg-[#DFF3FF] shadow-lg z-50">
+      <div className="fixed bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 flex h-16 sm:h-20 gap-2 sm:gap-4 md:gap-6 items-center px-3 sm:px-4 md:px-6 py-2 rounded-full bg-[#DFF3FF] shadow-lg z-50 max-w-[95vw] overflow-x-auto">
         {navItems.map((item) => {
           if (item.title === "Profile") {
             return (
-              <div key={item.title} className="relative" ref={profileMenuRef}>
+              <div key={item.title} className="relative flex-shrink-0" ref={profileMenuRef}>
                 <ProfileItem 
                   item={item} 
                   showMenu={showProfileMenu} 
@@ -83,14 +84,14 @@ const NavItem = ({ item }) => {
   const [hovered, setHovered] = useState(false);
   
   return (
-    <Link to={item.href} className="relative">
+    <Link to={item.href} className="relative flex-shrink-0">
       <motion.div
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         className="flex flex-col items-center gap-1"
       >
-        <motion.div className="flex items-center justify-center w-14 h-14 bg-[#CAC8C8] rounded-full transition-all duration-300 hover:scale-110">
-          <img src={item.icon} alt={item.title} className="w-8 h-8" />
+        <motion.div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-[#CAC8C8] rounded-full transition-all duration-300 hover:scale-110">
+          <img src={item.icon} alt={item.title} className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" />
         </motion.div>
         <AnimatePresence>
           {hovered && (
@@ -121,8 +122,8 @@ const ProfileItem = ({ item, showMenu, setShowMenu, handleLogout }) => {
           onClick={() => setShowMenu(!showMenu)}
           className="flex flex-col items-center gap-1 cursor-pointer"
         >
-          <motion.div className="flex items-center justify-center w-14 h-14 bg-[#CAC8C8] rounded-full transition-all duration-300 hover:scale-110">
-            <img src={item.icon} alt={item.title} className="w-8 h-8" />
+          <motion.div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-[#CAC8C8] rounded-full transition-all duration-300 hover:scale-110">
+            <img src={item.icon} alt={item.title} className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" />
           </motion.div>
           <AnimatePresence>
             {hovered && (
@@ -138,14 +139,13 @@ const ProfileItem = ({ item, showMenu, setShowMenu, handleLogout }) => {
           </AnimatePresence>
         </motion.div>
       </div>
-
       <AnimatePresence>
         {showMenu && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="absolute bottom-24 right-0 bg-gray-200 rounded-lg shadow-lg overflow-hidden w-64 z-50"
+            className="absolute bottom-16 sm:bottom-20 md:bottom-24 right-0 sm:right-auto sm:left-1/2 sm:-translate-x-1/2 bg-gray-200 rounded-lg shadow-lg overflow-hidden w-56 sm:w-64 z-50 max-w-[90vw]"
           >
             {profileMenuItems.map((menuItem) => (
               menuItem.isLogout ? (
@@ -153,23 +153,23 @@ const ProfileItem = ({ item, showMenu, setShowMenu, handleLogout }) => {
                   key={menuItem.title}
                   href={menuItem.href}
                   onClick={handleLogout}
-                  className="flex items-center gap-4 px-4 py-4 hover:bg-gray-300 border-b border-gray-300 last:border-0"
+                  className="flex items-center gap-3 sm:gap-4 px-3 sm:px-4 py-3 sm:py-4 hover:bg-gray-300 border-b border-gray-300 last:border-0"
                 >
-                  <div className="flex items-center justify-center w-12 h-12 bg-gray-300 rounded-full">
-                    <img src={menuItem.icon} alt={menuItem.title} className="w-6 h-6" />
+                  <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-gray-300 rounded-full flex-shrink-0">
+                    <img src={menuItem.icon} alt={menuItem.title} className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
-                  <span className="text-lg">{menuItem.title}</span>
+                  <span className="text-base sm:text-lg">{menuItem.title}</span>
                 </a>
               ) : (
                 <Link
                   key={menuItem.title}
                   to={menuItem.href}
-                  className="flex items-center gap-4 px-4 py-4 hover:bg-gray-300 border-b border-gray-300 last:border-0"
+                  className="flex items-center gap-3 sm:gap-4 px-3 sm:px-4 py-3 sm:py-4 hover:bg-gray-300 border-b border-gray-300 last:border-0"
                 >
-                  <div className="flex items-center justify-center w-12 h-12 bg-gray-300 rounded-full">
-                    <img src={menuItem.icon} alt={menuItem.title} className="w-6 h-6" />
+                  <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-gray-300 rounded-full flex-shrink-0">
+                    <img src={menuItem.icon} alt={menuItem.title} className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
-                  <span className="text-lg">{menuItem.title}</span>
+                  <span className="text-base sm:text-lg">{menuItem.title}</span>
                 </Link>
               )
             ))}
