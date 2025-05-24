@@ -17,13 +17,11 @@ const ProductDetail = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Get userId from sessionStorage
     const getUserId = () => {
         try {
             const userDataStr = sessionStorage.getItem("userData");
             if (userDataStr) {
                 const userData = JSON.parse(userDataStr);
-                // Access the user object and its id property
                 if (userData && userData.user && userData.user.id) {
                     return userData.user.id;
                 }
@@ -35,7 +33,6 @@ const ProductDetail = () => {
         }
     };
 
-    // Get token from sessionStorage
     const getToken = () => {
         try {
             const userDataStr = sessionStorage.getItem("userData");
@@ -106,7 +103,6 @@ const ProductDetail = () => {
             );
 
             toast.success(`Added ${quantity} ${product.name} to cart!`, {
-                
                 autoClose: 2000,
             });
         } catch (error) {
@@ -147,13 +143,13 @@ const ProductDetail = () => {
                             <img
                                 src="/images/backbutton.png"
                                 alt="Back"
-                                className="w-10 h-10 mr-2 cursor-pointer"
+                                className="w-8 h-8 sm:w-10 sm:h-10 mr-2 cursor-pointer"
                             />
-                            <span className="text-lg font-medium">Back to Products</span>
+                            <span className="text-base sm:text-lg font-medium">Back to Products</span>
                         </button>
                     </div>
                     <div className="flex justify-center items-center h-64">
-                        <div className="text-red-500 text-xl">{error || "Product not found"}</div>
+                        <div className="text-red-500 text-lg sm:text-xl">{error || "Product not found"}</div>
                     </div>
                 </div>
             </div>
@@ -170,8 +166,8 @@ const ProductDetail = () => {
     return (
         <div>
             <TitleBar cart={true} />
-            <div className="container mx-auto px-4 py-8">
-                <div className="mb-6">
+            <div className="container mx-auto px-4 py-4 sm:py-8">
+                <div className="mb-4 sm:mb-6">
                     <button
                         onClick={handleGoBack}
                         className="flex items-center text-gray-700 hover:text-gray-900 transition duration-300"
@@ -179,13 +175,13 @@ const ProductDetail = () => {
                         <img
                             src="/images/backbutton.png"
                             alt="Back"
-                            className="w-10 h-10 mr-2 cursor-pointer"
+                            className="w-8 h-8 sm:w-10 sm:h-10 mr-2 cursor-pointer"
                         />
-                        <span className="text-lg font-medium">Back to Products</span>
+                        <span className="text-base sm:text-lg font-medium">Back to Products</span>
                     </button>
                 </div>
-                <div className="flex">
-                    <div className="w-1/2 pr-8">
+                <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
+                    <div className="w-full lg:w-1/2 lg:pr-8">
                         <Swiper
                             navigation={true}
                             modules={[Navigation]}
@@ -196,20 +192,20 @@ const ProductDetail = () => {
                                     <img
                                         src={img}
                                         alt={`Product view ${index + 1}`}
-                                        className="w-full h-[500px] object-contain"
+                                        className="w-full h-64 sm:h-80 md:h-[500px] object-contain"
                                     />
                                 </SwiperSlide>
                             ))}
                         </Swiper>
                     </div>
-                    <div className="w-1/2 pl-8">
-                        <div className="flex justify-between items-start">
-                            <h1 className="text-3xl font-bold">{product.name}</h1>
+                    <div className="w-full lg:w-1/2 lg:pl-8">
+                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+                            <h1 className="text-2xl sm:text-3xl font-bold">{product.name}</h1>
                             <div className="flex items-center">
                                 {[1, 2, 3, 4, 5].map((star) => (
                                     <svg
                                         key={star}
-                                        className="h-6 w-6 text-yellow-400" 
+                                        className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400" 
                                         fill="currentColor"
                                         viewBox="0 0 24 24"
                                     >
@@ -219,17 +215,17 @@ const ProductDetail = () => {
                                 <span className="ml-2 text-gray-600">(5/5)</span>
                             </div>
                         </div>
-                        <p className="text-sm text-gray-500 mt-2">{product.category || "Uncategorized"}</p>
-                        <p className="mt-4 text-4xl font-bold text-blue-600">
+                        <p className="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2">{product.category || "Uncategorized"}</p>
+                        <p className="mt-2 sm:mt-4 text-2xl sm:text-3xl md:text-4xl font-bold text-blue-600">
                             ${product.price.toFixed(2)}
                         </p>
-                        <p className="mt-4 text-gray-700">{product.description}</p>
-                        <div className="mt-4 flex items-center">
-                            <span className="mr-4">Quantity:</span>
+                        <p className="mt-2 sm:mt-4 text-sm sm:text-base text-gray-700">{product.description}</p>
+                        <div className="mt-2 sm:mt-4 flex items-center">
+                            <span className="mr-2 sm:mr-4 text-sm sm:text-base">Quantity:</span>
                             <select
                                 value={quantity}
                                 onChange={(e) => setQuantity(Number(e.target.value))}
-                                className="border rounded px-2 py-1"
+                                className="border rounded px-2 py-1 text-sm sm:text-base"
                             >
                                 {[...Array(10)].map((_, i) => (
                                     <option key={i + 1} value={i + 1}>
@@ -238,10 +234,11 @@ const ProductDetail = () => {
                                 ))}
                             </select>
                         </div>
-                        <div className="mt-4 flex items-center">
-                            <span className="mr-4">Stock:</span>
+                        <div className="mt-2 sm:mt-4 flex items-center">
+                            <span className="mr-2 sm:mr-4 text-sm sm:text-base">Stock:</span>
                             <span
                                 className={`
+                                    text-sm sm:text-base
                                     ${product.quantity > 10 ? 'text-green-600' :
                                     product.quantity > 0 ? 'text-yellow-600' : 'text-red-600'}
                                 `}
@@ -253,7 +250,7 @@ const ProductDetail = () => {
                             onClick={handleAddToCart}
                             disabled={product.quantity === 0}
                             className={`
-                                mt-6 w-full py-3 rounded-lg text-white font-bold
+                                mt-4 sm:mt-6 w-full py-2 sm:py-3 rounded-lg text-white font-bold text-sm sm:text-base
                                 ${product.quantity > 0
                                     ? 'bg-blue-600 hover:bg-blue-700'
                                     : 'bg-gray-400 cursor-not-allowed'}

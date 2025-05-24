@@ -46,7 +46,6 @@ const ProductCard = ({ productsData }) => {
     }
   };
 
-  
   const notify = () =>
     toast.success("Added to the cart!", {
       position: "bottom-top",
@@ -60,18 +59,15 @@ const ProductCard = ({ productsData }) => {
       transition: Bounce,
     });
 
-  
   const handleProductClick = () => {
     navigate(`/products/${productsData.itemId}`);
   };
 
-  
   const getImageUrl = (imageBytes) => {
     if (!imageBytes) return null;
     return `data:image/jpeg;base64,${imageBytes}`;
   };
 
- 
   const availableImages = [
     getImageUrl(productsData.image1),
     getImageUrl(productsData.image2),
@@ -79,7 +75,6 @@ const ProductCard = ({ productsData }) => {
     getImageUrl(productsData.image4),
   ].filter((img) => img);
 
-  
   const handleAddToCart = async () => {
     const userId = getUserId();
     if (!userId) {
@@ -110,7 +105,6 @@ const ProductCard = ({ productsData }) => {
         autoClose: 2000,
       });
   
-     
       window.dispatchEvent(new Event("cartUpdated"));
     } catch (error) {
       console.error("Error adding to cart:", error);
@@ -120,11 +114,10 @@ const ProductCard = ({ productsData }) => {
       });
     }
   };
-  
 
   return (
-    <div className="w-80 h-fit rounded-lg border border-gray-200 bg-white p-8 shadow-sm">
-      <div className="h-36 w-full">
+    <div className="w-full sm:w-72 md:w-80 h-fit rounded-lg border border-gray-200 bg-white p-4 sm:p-6 md:p-8 shadow-sm">
+      <div className="h-32 sm:h-36 w-full">
         <Swiper
           navigation={true}
           modules={[Navigation]}
@@ -141,17 +134,17 @@ const ProductCard = ({ productsData }) => {
           ))}
         </Swiper>
       </div>
-      <div className="mt-6">
+      <div className="mt-4 sm:mt-6">
         <div className="flex items-center justify-between">
-          <div className="bg-blue-300 text-xs font-light w-fit py-1 px-4 font-lexend rounded-full">
+          <div className="bg-blue-300 text-xs font-light w-fit py-1 px-3 sm:px-4 font-lexend rounded-full">
             {productsData.category || "Uncategorized"}
           </div>
-          <div className="mt-2 flex flex-col items-end">
+          <div className="mt-1 sm:mt-2 flex flex-col items-end">
             <div className="flex items-center">
               {[0, 1, 2, 3, 4].map((index) => (
                 <svg
                   key={index}
-                  className={`h-4 w-4 text-yellow-400`}
+                  className={`h-3 w-3 sm:h-4 sm:w-4 text-yellow-400`}
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -161,39 +154,40 @@ const ProductCard = ({ productsData }) => {
                 </svg>
               ))}
             </div>
-            <span className="text-sm font-lexend text-gray-900">5/5</span>
+            <span className="text-xs sm:text-sm font-lexend text-gray-900">5/5</span>
           </div>
         </div>
         <div>
           <p
             onClick={handleProductClick}
-            className="cursor-pointer text-base font-lexend leading-tight text-gray-900 mt-2"
+            className="cursor-pointer text-sm sm:text-base font-lexend leading-tight text-gray-900 mt-1 sm:mt-2"
           >
             {productsData.name}
           </p>
           <p
             onClick={handleProductClick}
-            className="cursor-pointer line-clamp-3 text-sm leading-tight font-quicksand text-gray-600 mt-2 pr-12"
+            className="cursor-pointer line-clamp-3 text-xs sm:text-sm leading-tight font-quicksand text-gray-600 mt-1 sm:mt-2 pr-8 sm:pr-12"
           >
             {productsData.description}
           </p>
         </div>
-        <hr className="my-4 border-gray-400" />
-        <div className="flex items-center justify-between gap-4">
-          <p className="text-xl font-lexend text-gray-900">
+        <hr className="my-2 sm:my-4 border-gray-400" />
+        <div className="flex items-center justify-between gap-2 sm:gap-4">
+          <p className="text-lg sm:text-xl font-lexend text-gray-900">
             ${productsData.price.toFixed(2)}
           </p>
           <button
             type="button"
             onClick={handleAddToCart}
-            className="group flex font-lexend hover:scale-105 duration-100 gap-2 items-center rounded-lg bg-blue-700 px-5 py-2 text-sm text-white hover:bg-transparent hover:text-blue-700 border-2 border-blue-700 cursor-pointer"
+            className="group flex font-lexend hover:scale-105 duration-100 gap-1 sm:gap-2 items-center rounded-lg bg-blue-700 px-3 sm:px-5 py-1 sm:py-2 text-xs sm:text-sm text-white hover:bg-transparent hover:text-blue-700 border-2 border-blue-700 cursor-pointer"
           >
             <img
               src={cartIcon}
               alt="Cart Icon"
-              className="h-5 group-hover:invert duration-100"
+              className="h-4 sm:h-5 group-hover:invert duration-100"
             />
-            Add to Cart
+            <span className="hidden sm:inline">Add to Cart</span>
+            <span className="sm:hidden">Add</span>
           </button>
         </div>
       </div>
