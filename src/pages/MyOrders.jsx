@@ -4,6 +4,7 @@ import TitleBar from '../Components/TitleBar';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { toast } from 'react-toastify'; 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -16,7 +17,7 @@ const MyOrders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/orders/user/${userId}`, {
+        const response = await axios.get(`${backendUrl}api/orders/user/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
